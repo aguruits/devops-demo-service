@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: DEVOPS-DEMO-SERVICE
+  datasource:
+    url: jdbc:mysql://mysqldb:3306/devopsdemodb?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    username: admin
+    password: admin
+    platform: mysql
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true    
+    hibernate:
+      ddl-auto: update
+#  h2:
+#    console:
+#      enabled: true
+  
+   
+server:
+  port: 9090

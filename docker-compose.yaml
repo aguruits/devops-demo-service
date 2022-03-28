@@ -1,0 +1,46 @@
+version: "3"
+services:
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqldb
+    environment:
+      - MYSQL_DATABASE=devopsdemodb
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_ROOT_PASSWORD=admin
+    ports:
+      - "3306:3306"
+    networks:
+      - devops-demo-mysql
+    expose:
+      - 3306
+    volumes:
+      - mysqldb-data:/var/lib/mysql
+      
+  devops-demo-service:
+    container_name: devops-demo-mysql
+    image: devops-demo-mysql
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    networks:
+      - devops-demo-mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/devopsdemodb?autoReconnect=true&useSSL=false
+    depends_on:
+      - mysqldb
+    volumes:
+      - devops-demo-data:/var/lib/devopsdemo   
+
+volumes:
+  mysqldb-data:
+  devops-demo-data:
+
+networks:
+  devops-demo-mysql: 
+  
+  
+
+  
